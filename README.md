@@ -1,54 +1,88 @@
 # LA TV Shows Catalog
 
-A dynamic, interactive catalog of TV shows set in Los Angeles built from the Snap Engineering Academy starter code. This project demonstrates my understanding of data structures (arrays and objects) and various data operations in vanilla JavaScript.
+A dynamic, interactive catalog of TV shows set in Los Angeles. Built with vanilla HTML, CSS, and JavaScript, this project demonstrates proficiency in data structures, DOM manipulation, and modern web development practices.
+
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black)
+
+## 🎬 Demo
+
+[Live Demo](https://sleepyetee.github.io/Snap-Project-TV-Shows)
+
+## ✨ Features
+
+- **Filter by Genre** - Browse shows by Comedy, Drama, Reality, or Documentary
+- **Search** - Real-time search across titles, descriptions, networks, and cast
+- **Sort** - Order by name (A-Z), release year, or rating
+- **Shuffle** - Randomize the catalog display
+- **CRUD Operations** - Add, edit, and delete TV shows
+- **Responsive Design** - Works on desktop and mobile devices
+- **Visual Effects** - Animated starry background with particle effects
+
+## 🛠️ Tech Stack
+
+- **HTML5** - Semantic markup
+- **CSS3** - Flexbox, Grid, animations, and responsive design
+- **JavaScript (ES6+)** - Array methods, DOM manipulation, event handling
+
+## 📁 Project Structure
+
+```
+├── index.html      # Main HTML structure
+├── style.css       # Styling and animations
+├── scripts.js      # Application logic and data
+├── README.md       # Project documentation
+└── LICENSE         # MIT License
+```
+
+## 🚀 Getting Started
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/your-username/Snap-Project-TV-Shows.git
+   ```
+
+2. **Open locally**
+   ```bash
+   cd Snap-Project-TV-Shows
+   open index.html
+   ```
+
+3. **Or use a local server**
+   ```bash
+   npx serve .
+   ```
+
+## 📊 Data Model
+
+Each TV show is represented as an object with the following properties:
+
+| Property | Description |
+|----------|-------------|
+| `id` | Unique identifier |
+| `name` | Show title |
+| `category` | Genre (comedy, drama, reality, documentary) |
+| `description` | Brief synopsis |
+| `value` | Release year |
+| `rarity` | Network/streaming service |
+| `rating` | Rating out of 10 |
+| `element` | Lead actor/actress or director |
+| `bonusEffect` | Tagline or notable feature |
+| `imageURL` | Poster image URL |
+
+## 🎯 Key Implementations
+
+- **Fisher-Yates Shuffle** - Efficient randomization algorithm
+- **Debounced Search** - Optimized real-time search performance
+- **Dynamic Card Rendering** - Template cloning pattern for efficient DOM updates
+- **Responsive Grid Layout** - CSS Grid with auto-fill for adaptive layouts
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
-## Main Points
-
-### Project Overview
-- **Catalog Website:** Displays TV shows using dynamic cards generated from an array of objects.
-- **Built With:** HTML, CSS, and JavaScript.
-
-### Data Structures
-- **Array of Objects:** Each TV show is represented as an object with the following properties:
-  - `id`
-  - `name`
-  - `category` (e.g., comedy, drama, reality, documentary)
-  - `description`
-  - `value` (release year)
-  - `rarity` (network)
-  - `rating`
-  - `element` (lead actor/actress)
-  - `bonusEffect` (tagline)
-  - `imageURL`
-
-### Data Operations
-- **Filtering:** Users can filter shows by genre.
-- **Searching:** Search across multiple fields (name, description, network, etc.).
-- **Sorting:** Sort TV shows by name, release year, or rating (both ascending and descending).
-- **Shuffling:** Randomize the order of the catalog.
-- **CRUD Operations:** Add new shows, update existing ones, delete shows, and reset to default.
-
-### Interface & UX
-- **Dynamic Rendering:** Uses a hidden card template that is cloned and populated with TV show data.
-- **Controls:** Includes dropdowns for filtering and sorting, an input for search, and buttons for shuffle, reset, and (if needed) grouping.
-- **Visual Enhancements:** Responsive design with background animations and particle effects.
-
-### Installation & Deployment
-- **Clone and Use:** Start by cloning the template repository.
-- **Local Edits:** Modify HTML/CSS/JS files as needed and preview via `index.html`.
-- **Publish:** Deploy the final version using GitHub Pages or your preferred host.  
-- **Submission:** Provide the live URL and GitHub repository link with your submission.
-
-### Reflection
-- **Learning Experience:** Gained proficiency with arrays, objects, and various data operations.
-- **Challenges:** Implementing real-time UI updates and ensuring a polished design.
-- **Future Improvements:** Consider adding advanced features such as pagination and enhanced error handling.
-
----
-
-## Additional Resources
-- [MDN Web Docs](https://developer.mozilla.org/)
-- [Stack Overflow](https://stackoverflow.com/)
+*Built as part of the Snap Engineering Academy program.*
 

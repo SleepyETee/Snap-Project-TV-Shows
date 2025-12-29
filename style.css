@@ -5,6 +5,19 @@
   padding: 0;
 }
 
+/* Screen reader only - accessibility */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 html, body {
   height: 100%;
 }
@@ -105,7 +118,7 @@ header {
 .title {
   color: #fff;
   font-size: 2.5rem;
-  font: Open Sans, sans-serif;
+  font-family: 'Open Sans', sans-serif;
 }
 
 /*-- Main Content & Controls --*/
@@ -135,6 +148,29 @@ main {
   font-size: 1rem;
   border: 1px solid #ccc;
   border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+#controls button {
+  background-color: #4a90d9;
+  color: #fff;
+  cursor: pointer;
+  border: none;
+}
+
+#controls button:hover {
+  background-color: #357abd;
+  transform: translateY(-1px);
+}
+
+#controls button:active {
+  transform: translateY(0);
+}
+
+#controls input:focus,
+#controls select:focus {
+  outline: 2px solid #4a90d9;
+  outline-offset: 2px;
 }
 
 /*-- Catalog Grid & Card Template-- */
@@ -212,6 +248,11 @@ main {
 .card .actions .edit {
   background-color: #f0ad4e;
   color: #fff;
+  transition: background-color 0.2s ease;
+}
+
+.card .actions .edit:hover {
+  background-color: #ec971f;
 }
 
 .card .actions .delete {
@@ -252,6 +293,136 @@ main {
   border-radius: 4px;
   flex: 1;
   min-width: 150px;
+}
+
+/* No Results Message */
+.no-results {
+  text-align: center;
+  padding: 40px 20px;
+  color: #fff;
+  font-size: 1.2rem;
+}
+
+.no-results p {
+  background: rgba(0, 0, 0, 0.5);
+  padding: 20px 40px;
+  border-radius: 8px;
+  display: inline-block;
+}
+
+/*-- Edit Modal --*/
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  background: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  max-width: 500px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+}
+
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 28px;
+  cursor: pointer;
+  color: #666;
+  transition: color 0.2s;
+}
+
+.modal-close:hover {
+  color: #333;
+}
+
+.modal-content h2 {
+  margin-bottom: 20px;
+  color: #333;
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 600;
+  color: #333;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.form-group textarea {
+  resize: vertical;
+}
+
+.form-row {
+  display: flex;
+  gap: 15px;
+}
+
+.form-row .form-group {
+  flex: 1;
+}
+
+.form-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  justify-content: flex-end;
+}
+
+.btn-cancel {
+  padding: 10px 20px;
+  border: 1px solid #ccc;
+  background: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.2s;
+}
+
+.btn-cancel:hover {
+  background: #f0f0f0;
+}
+
+.btn-save {
+  padding: 10px 20px;
+  border: none;
+  background: #4a90d9;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.2s;
+}
+
+.btn-save:hover {
+  background: #357abd;
 }
 
 /*--Footer Styling-- */

@@ -1,107 +1,9 @@
-// /**
-//  * Data Catalog Project Starter Code - SEA Stage 2
-//  *
-//  * This file is where you should be doing most of your work. You should
-//  * also make changes to the HTML and CSS files, but we want you to prioritize
-//  * demonstrating your understanding of data structures, and you'll do that
-//  * with the JavaScript code you write in this file.
-//  *
-//  * The comments in this file are only to help you learn how the starter code
-//  * works. The instructions for the project are in the README. That said, here
-//  * are the three things you should do first to learn about the starter code:
-//  * - 1 - Change something small in index.html or style.css, then reload your
-//  *    browser and make sure you can see that change.
-//  * - 2 - On your browser, right click anywhere on the page and select
-//  *    "Inspect" to open the browser developer tools. Then, go to the "console"
-//  *    tab in the new window that opened up. This console is where you will see
-//  *    JavaScript errors and logs, which is extremely helpful for debugging.
-//  *    (These instructions assume you're using Chrome, opening developer tools
-//  *    may be different on other browsers. We suggest using Chrome.)
-//  * - 3 - Add another string to the titles array a few lines down. Reload your
-//  *    browser and observe what happens. You should see a fourth "card" appear
-//  *    with the string you added to the array, but a broken image.
-//  *
-//  */
-
-// const FRESH_PRINCE_URL =
-//   "https://upload.wikimedia.org/wikipedia/en/3/33/Fresh_Prince_S1_DVD.jpg";
-// const CURB_POSTER_URL =
-//   "https://m.media-amazon.com/images/M/MV5BZDY1ZGM4OGItMWMyNS00MDAyLWE2Y2MtZTFhMTU0MGI5ZDFlXkEyXkFqcGdeQXVyMDc5ODIzMw@@._V1_FMjpg_UX1000_.jpg";
-// const EAST_LOS_HIGH_POSTER_URL =
-//   "https://static.wikia.nocookie.net/hulu/images/6/64/East_Los_High.jpg";
-
-// // This is an array of strings (TV show titles)
-// let titles = [
-//   "Fresh Prince of Bel Air",
-//   "Curb Your Enthusiasm",
-//   "East Los High",
-// ];
-// // Your final submission should have much more data than this, and
-// // you should use more than just an array of strings to store it all.
-
-// // This function adds cards the page to display the data in the array
-// function showCards() {
-//   const cardContainer = document.getElementById("card-container");
-//   cardContainer.innerHTML = "";
-//   const templateCard = document.querySelector(".card");
-
-//   for (let i = 0; i < titles.length; i++) {
-//     let title = titles[i];
-
-//     // This part of the code doesn't scale very well! After you add your
-//     // own data, you'll need to do something totally different here.
-//     let imageURL = "";
-//     if (i == 0) {
-//       imageURL = FRESH_PRINCE_URL;
-//     } else if (i == 1) {
-//       imageURL = CURB_POSTER_URL;
-//     } else if (i == 2) {
-//       imageURL = EAST_LOS_HIGH_POSTER_URL;
-//     }
-
-//     const nextCard = templateCard.cloneNode(true); // Copy the template card
-//     editCardContent(nextCard, title, imageURL); // Edit title and image
-//     cardContainer.appendChild(nextCard); // Add new card to the container
-//   }
-// }
-
-// function editCardContent(card, newTitle, newImageURL) {
-//   card.style.display = "block";
-
-//   const cardHeader = card.querySelector("h2");
-//   cardHeader.textContent = newTitle;
-
-//   const cardImage = card.querySelector("img");
-//   cardImage.src = newImageURL;
-//   cardImage.alt = newTitle + " Poster";
-
-//   // You can use console.log to help you debug!
-//   // View the output by right clicking on your website,
-//   // select "Inspect", then click on the "Console" tab
-//   console.log("new card:", newTitle, "- html: ", card);
-// }
-
-// // This calls the addCards() function when the page is first loaded
-// document.addEventListener("DOMContentLoaded", showCards);
-
-// function quoteAlert() {
-//   console.log("Button Clicked!");
-//   alert(
-//     "I guess I can kiss heaven goodbye, because it got to be a sin to look this good!"
-//   );
-// }
-
-// function removeLastCard() {
-//   titles.pop(); // Remove last item in titles array
-//   showCards(); // Call showCards again to refresh
-// }
-
-
-
-
 /**
- * LA TV Shows Data Catalog Project
-*/
+ * LA TV Shows Data Catalog
+ * 
+ * An interactive catalog of TV shows set in Los Angeles.
+ * Features: filtering, searching, sorting, shuffling, and CRUD operations.
+ */
 
 const defaultCatalog = [
   // --- Comedy ---
@@ -355,7 +257,6 @@ const defaultCatalog = [
 
 
 let catalogItems = JSON.parse(JSON.stringify(defaultCatalog));
-// let isGroupedView = false;
 
 
 // Helper Function: Create a TV Show Card using the Hidden Template
@@ -382,7 +283,7 @@ function editCardContent(card, item) {
   // Construct the inner HTML with details from the item
   cardContent.innerHTML = `
     <h2>${item.name}</h2>
-    <img src="${item.imageURL}" alt="${item.name} Poster" />
+    <img src="${item.imageURL}" alt="${item.name} Poster" onerror="this.src='https://via.placeholder.com/300x450?text=No+Image';this.onerror=null;" />
     <ul>
       <li><strong>Genre:</strong> ${item.category}</li>
       <li><strong>Network:</strong> ${item.rarity}</li>
@@ -402,11 +303,20 @@ function editCardContent(card, item) {
 // Display the Catalog Items
 function displayCatalog(items) {
   const container = document.getElementById("card-container");
+  const noResults = document.getElementById("noResults");
+  
   if (!container) {
     console.error("Element with id 'card-container' not found.");
     return;
   }
-  container.innerHTML = ""; 
+  container.innerHTML = "";
+  
+  // Show/hide no results message
+  if (items.length === 0) {
+    if (noResults) noResults.style.display = "block";
+  } else {
+    if (noResults) noResults.style.display = "none";
+  }
   
   items.forEach(item => {
     const card = createItemCard(item);
@@ -467,15 +377,6 @@ function filterByValueRange(min, max) {
   return catalogItems.filter(item => item.value >= min && item.value <= max);
 }
 
-// // Group by genre 
-// function groupCatalogByCategory() {
-//   return catalogItems.reduce((groups, item) => {
-//     if (!groups[item.category]) groups[item.category] = [];
-//     groups[item.category].push(item);
-//     return groups;
-//   }, {});
-// }
-
 // Shuffle using Fisher–Yates algorithm
 function shuffleCatalog() {
   let shuffled = catalogItems.slice();
@@ -511,13 +412,7 @@ function resetCatalog() {
   updateCatalogDisplay();
 }
 
-// // Toggle between grouped and ungrouped view
-// function toggleGroupView() {
-//   isGroupedView = !isGroupedView;
-//   updateCatalogDisplay();
-// }
-
-// Update as search/filter
+// Update display based on current filters/search
 function updateCatalogDisplay() {
   const category = document.getElementById("filterSelect").value;
   const searchQuery = document.getElementById("searchInput").value;
@@ -594,7 +489,6 @@ document.getElementById("sortSelect").addEventListener("change", () => {
 
 document.getElementById("shuffleButton").addEventListener("click", shuffleCatalog);
 document.getElementById("resetButton").addEventListener("click", resetCatalog);
-// document.getElementById("groupToggleButton").addEventListener("click", toggleGroupView);
 
 // Add New Form submission
 document.getElementById("addItemForm").addEventListener("submit", e => {
@@ -614,36 +508,68 @@ document.getElementById("addItemForm").addEventListener("submit", e => {
   }
 });
 
-// Edit function
+// Edit function - opens modal with current item data
 function editItem(id) {
   const item = catalogItems.find(item => item.id === id);
-  if (item) {
-    const newName = prompt("Enter new show name:", item.name) || item.name;
-    const newCategory = prompt("Enter new genre:", item.category) || item.category;
-    const newDescription = prompt("Enter new description:", item.description) || item.description;
-    const newValue = prompt("Enter new release year:", item.value);
-    const newRarity = prompt("Enter new network (e.g., NBC, HBO):", item.rarity) || item.rarity;
-    const newRating = prompt("Enter new rating (1-10):", item.rating);
-    const newElement = prompt("Enter new lead actor/actress:", item.element) || item.element;
-    const newBonus = prompt("Enter new tagline:", item.bonusEffect) || item.bonusEffect;
-    
-    if (newValue !== null && !isNaN(parseInt(newValue, 10)) &&
-        newRating !== null && !isNaN(parseInt(newRating, 10))) {
-      const updatedItem = {
-        ...item,
-        name: newName,
-        category: newCategory,
-        description: newDescription,
-        value: parseInt(newValue, 10),
-        rarity: newRarity,
-        rating: parseInt(newRating, 10),
-        element: newElement,
-        bonusEffect: newBonus
-      };
-      updateItem(updatedItem);
-    }
-  }
+  if (!item) return;
+  
+  // Populate the edit form with current values
+  document.getElementById("editItemId").value = item.id;
+  document.getElementById("editItemName").value = item.name;
+  document.getElementById("editItemCategory").value = item.category;
+  document.getElementById("editItemDescription").value = item.description;
+  document.getElementById("editItemValue").value = item.value;
+  document.getElementById("editItemRarity").value = item.rarity;
+  document.getElementById("editItemRating").value = item.rating;
+  document.getElementById("editItemElement").value = item.element;
+  document.getElementById("editItemBonus").value = item.bonusEffect;
+  
+  // Show the modal
+  document.getElementById("editModal").style.display = "flex";
 }
+
+// Close edit modal
+function closeEditModal() {
+  document.getElementById("editModal").style.display = "none";
+}
+
+// Handle edit form submission
+document.getElementById("editItemForm").addEventListener("submit", e => {
+  e.preventDefault();
+  
+  const id = parseInt(document.getElementById("editItemId").value, 10);
+  const item = catalogItems.find(item => item.id === id);
+  if (!item) return;
+  
+  const updatedItem = {
+    ...item,
+    name: document.getElementById("editItemName").value.trim(),
+    category: document.getElementById("editItemCategory").value,
+    description: document.getElementById("editItemDescription").value.trim(),
+    value: parseInt(document.getElementById("editItemValue").value, 10),
+    rarity: document.getElementById("editItemRarity").value.trim(),
+    rating: parseFloat(document.getElementById("editItemRating").value),
+    element: document.getElementById("editItemElement").value.trim(),
+    bonusEffect: document.getElementById("editItemBonus").value.trim()
+  };
+  
+  updateItem(updatedItem);
+  closeEditModal();
+});
+
+// Close modal when clicking outside
+document.getElementById("editModal").addEventListener("click", e => {
+  if (e.target.id === "editModal") {
+    closeEditModal();
+  }
+});
+
+// Close modal with Escape key
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape") {
+    closeEditModal();
+  }
+});
 
 // Initialization
 document.addEventListener("DOMContentLoaded", () => {
