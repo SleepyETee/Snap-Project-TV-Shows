@@ -1,0 +1,16 @@
+{
+  "name": "snap-project-tv-shows",
+  "version": "1.0.0",
+  "description": "A dynamic, interactive catalog of TV shows",
+  "homepage": "https://sleepyetee.github.io/Snap-Project-TV-Shows",
+  "scripts": {
+    "deploy": "gh-pages -d ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SleepyETee/Snap-Project-TV-Shows.git"
+  },
+  "devDependencies": {
+    "gh-pages": "^6.3.0"
+  }
+}

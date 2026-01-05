@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LA TV Shows | Home</title>
+    <meta name="description" content="A Catalog of TV Shows Set in Los Angeles" />
+    <meta name="author" content="LA TV Shows" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📺</text></svg>" />
+    <link rel="stylesheet" href="style.css" />
+    <script type="text/javascript" src="scripts.js" defer></script>
+  </head>
+
+  <!-- Body -->
+  <body>
+    <!--Animation Layer-->
+    <div class="background-container">
+      <div class="stars"></div>
+      <div class="twinkling"></div>
+      <div class="clouds"></div>
+    </div>
+    
+    <header class="main-header">
+      <h1 class="title">LA TV Shows</h1>
+    </header>
+    
+    <!-- Operation control bar -->
+    <div id="controls">
+      <!-- Filter by Genre -->
+      <label for="filterSelect" class="sr-only">Filter by Genre</label>
+      <select id="filterSelect" aria-label="Filter by genre">
+        <option value="all">All Genres</option>
+        <option value="drama">Drama</option>
+        <option value="comedy">Comedy</option>
+        <option value="reality">Reality</option>
+        <option value="documentary">Documentary</option>
+      </select>
+      
+      <!-- Search Input -->
+      <label for="searchInput" class="sr-only">Search TV Shows</label>
+      <input type="text" id="searchInput" placeholder="Search TV Shows..." aria-label="Search TV shows" />
+      
+      <!-- Action Buttons -->
+      <label for="sortSelect" class="sr-only">Sort options</label>
+      <select id="sortSelect" aria-label="Sort options">
+        <option value="">Sort by...</option>
+        <option value="name">Sort by Name (A-Z)</option>
+        <option value="yearAsc">Sort by Year (Asc)</option>
+        <option value="yearDesc">Sort by Year (Desc)</option>
+        <option value="ratingAsc">Sort by Rating (Asc)</option>
+        <option value="ratingDesc">Sort by Rating (Desc)</option>
+      </select>
+      <button id="shuffleButton" aria-label="Shuffle shows randomly">Shuffle Shows</button>
+      <button id="resetButton" aria-label="Reset catalog to default">Reset Catalog</button>
+    </div>
+    
+    <div id="card-container" role="main" aria-live="polite"></div>
+    
+    <!-- No Results Message -->
+    <div id="noResults" class="no-results" style="display: none;">
+      <p>No TV shows found matching your search.</p>
+    </div>
+    
+    <!-- Hidden Card Template: Used by scripts.js to clone and populate dynamic cards -->
+    <div class="card" style="display: none;">
+      <div class="card-content">
+        <h2>TV Show Title</h2>
+        <img src="" alt="TV Show Poster" />
+        <ul>
+          <li><strong>Genre:</strong></li>
+          <li><strong>Network:</strong></li>
+          <li><strong>Year:</strong></li>
+          <li><strong>Rating:</strong></li>
+          <li><strong>Lead:</strong></li>
+          <li><strong>Tagline:</strong></li>
+          <li><strong>Description:</strong></li>
+        </ul>
+      </div>
+    </div>
+    
+    <!-- Add section-->
+    <section id="addItemSection">
+      <h2>Add a TV Show</h2>
+      <form id="addItemForm">
+        <input type="text" id="itemName" placeholder="Show Name" required />
+        <select id="itemCategory" required>
+          <option value="">Select Genre</option>
+          <option value="drama">Drama</option>
+          <option value="comedy">Comedy</option>
+          <option value="reality">Reality</option>
+          <option value="documentary">Documentary</option>
+        </select>
+        <input type="text" id="itemDescription" placeholder="Description" required />
+        <!-- Release Year -->
+        <input type="number" id="itemValue" placeholder="Year" required />
+        <!-- Network-->
+        <select id="itemRarity" required>
+          <option value="">Select Network</option>
+          <option value="ABC">ABC</option>
+          <option value="NBC">NBC</option>
+          <option value="CBS">CBS</option>
+          <option value="FOX">FOX</option>
+          <option value="HBO">HBO</option>
+        </select>
+        <!-- Rating -->
+        <input type="number" id="itemRating" placeholder="Rating (1-10)" min="1" max="10" step="0.1" required />
+        <!-- Lead actor/actress -->
+        <input type="text" id="itemElement" placeholder="Lead Actor/Actress" required />
+        <!-- Tagline for the TV show -->
+        <input type="text" id="itemBonus" placeholder="Show Tagline" required />
+        <button type="submit">Add TV Show</button>
+      </form>
+    </section>
+    
+    <!-- Edit Modal -->
+    <div id="editModal" class="modal" style="display: none;">
+      <div class="modal-content">
+        <span class="modal-close" onclick="closeEditModal()">&times;</span>
+        <h2>Edit TV Show</h2>
+        <form id="editItemForm">
+          <input type="hidden" id="editItemId" />
+          <div class="form-group">
+            <label for="editItemName">Show Name</label>
+            <input type="text" id="editItemName" required />
+          </div>
+          <div class="form-group">
+            <label for="editItemCategory">Genre</label>
+            <select id="editItemCategory" required>
+              <option value="drama">Drama</option>
+              <option value="comedy">Comedy</option>
+              <option value="reality">Reality</option>
+              <option value="documentary">Documentary</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="editItemDescription">Description</label>
+            <textarea id="editItemDescription" rows="3" required></textarea>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="editItemValue">Year</label>
+              <input type="number" id="editItemValue" required />
+            </div>
+            <div class="form-group">
+              <label for="editItemRating">Rating (1-10)</label>
+              <input type="number" id="editItemRating" min="1" max="10" step="0.1" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="editItemRarity">Network</label>
+            <input type="text" id="editItemRarity" required />
+          </div>
+          <div class="form-group">
+            <label for="editItemElement">Lead Actor/Actress</label>
+            <input type="text" id="editItemElement" required />
+          </div>
+          <div class="form-group">
+            <label for="editItemBonus">Tagline</label>
+            <input type="text" id="editItemBonus" required />
+          </div>
+          <div class="form-actions">
+            <button type="button" class="btn-cancel" onclick="closeEditModal()">Cancel</button>
+            <button type="submit" class="btn-save">Save Changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>&copy; 2025 LA TV Shows. All rights reserved.</p>
+    </footer>
+  </body>
+</html>
